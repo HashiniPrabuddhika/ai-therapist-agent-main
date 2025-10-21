@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import type { Configuration } from "webpack";
 
 const nextConfig: NextConfig = {
   eslint: {
@@ -8,40 +7,11 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-
   reactStrictMode: false,
-
-  // Disable image optimization warnings
   images: {
     unoptimized: true,
   },
-
-  // Ignore specific page extensions
-  pageExtensions: ["tsx", "ts", "jsx", "js"].filter(
-    (ext) => !ext.includes("spec")
-  ),
-
-  // Configure webpack
-  webpack: (config: Configuration, { isServer, dev }: { isServer: boolean; dev: boolean }) => {
-    // Ensure resolve object exists
-    config.resolve = config.resolve || {};
-    
-    // Ignore specific modules that might cause issues
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      sharp$: false,
-      canvas$: false,
-    };
-
-    return config;
-  },
-
-  // Suppress specific console warnings
-  onDemandEntries: {
-    // Reduce console noise
-    maxInactiveAge: 25 * 1000,
-    pagesBufferLength: 2,
-  },
+  // Remove --turbopack, use webpack instead
 };
 
 export default nextConfig;

@@ -70,49 +70,133 @@ export function BreathingGame() {
 
   if (isComplete) {
     return (
-      <div className="flex flex-col items-center justify-center h-[400px] space-y-6">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "400px",
+          gap: "1.5rem",
+        }}
+      >
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center"
+          style={{
+            width: "5rem",
+            height: "5rem",
+            borderRadius: "9999px",
+            backgroundColor: "hsl(142 76% 36% / 0.2)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          <Check className="w-10 h-10 text-green-500" />
+          <Check
+            style={{
+              width: "2.5rem",
+              height: "2.5rem",
+              color: "hsl(142 76% 36%)",
+            }}
+          />
         </motion.div>
-        <h3 className="text-2xl font-semibold">Great job!</h3>
-        <p className="text-muted-foreground text-center max-w-sm">
+        <h3
+          style={{
+            fontSize: "1.5rem",
+            fontWeight: "600",
+            color: "hsl(var(--foreground))",
+          }}
+        >
+          Great job!
+        </h3>
+        <p
+          style={{
+            color: "hsl(var(--muted-foreground))",
+            textAlign: "center",
+            maxWidth: "24rem",
+          }}
+        >
           You've completed {TOTAL_ROUNDS} rounds of breathing exercises. How do
           you feel?
         </p>
-        <Button onClick={handleReset} className="mt-4">
+        <Button onClick={handleReset} style={{ marginTop: "1rem" }}>
           Start Again
         </Button>
       </div>
     );
   }
 
-  return (
-    <div className="flex flex-col items-center justify-center h-[400px] space-y-8">
+ return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: "hsl(var(--background))",
+        justifyContent: "center",
+        height: "400px",
+        gap: "2rem",
+      }}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={phase}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
-          className="text-center space-y-4"
+          style={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+          }}
         >
-          <div className="relative w-32 h-32 mx-auto">
+          <div
+            style={{
+              position: "relative",
+              width: "8rem",
+              height: "8rem",
+              margin: "0 auto",
+            }}
+          >
             <motion.div
               animate={{
                 scale: phase === "inhale" ? 1.5 : phase === "exhale" ? 1 : 1.2,
               }}
               transition={{ duration: 4, ease: "easeInOut" }}
-              className="absolute inset-0 bg-primary/10 rounded-full"
+              style={{
+                position: "absolute",
+                inset: "0",
+                backgroundColor: "#e0f2fe",
+                borderRadius: "9999px",
+              }}
             />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Wind className="w-8 h-8 text-primary" />
+            <div
+              style={{
+                position: "absolute",
+                inset: "0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Wind
+                style={{
+                  width: "2rem",
+                  height: "2rem",
+                  color: "hsl(var(--primary))",
+                }}
+              />
             </div>
           </div>
-          <h3 className="text-2xl font-semibold">
+          <h3
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: "600",
+              color: "hsl(var(--foreground))",
+            }}
+          >
             {phase === "inhale"
               ? "Breathe In"
               : phase === "hold"
@@ -122,12 +206,24 @@ export function BreathingGame() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="w-64">
-        <Progress value={progress} className="h-2" />
+      <div style={{ width: "16rem" }}>
+        <Progress value={progress} style={{ height: "0.5rem" }} />
       </div>
 
-      <div className="space-y-2 text-center">
-        <div className="text-sm text-muted-foreground">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "0.875rem",
+            color: "hsl(var(--muted-foreground))",
+          }}
+        >
           Round {round} of {TOTAL_ROUNDS}
         </div>
         <Button

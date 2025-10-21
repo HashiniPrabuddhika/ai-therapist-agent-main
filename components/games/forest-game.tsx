@@ -76,7 +76,7 @@ export function ForestGame() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[400px] space-y-8">
+    <div className="flex flex-col items-center justify-center h-[400px] space-y-8 bg-cyan-950">
       <div className="relative w-48 h-48">
         <motion.div
           animate={{

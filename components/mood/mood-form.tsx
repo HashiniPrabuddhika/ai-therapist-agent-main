@@ -94,7 +94,7 @@ export function MoodForm({ onSuccess }: MoodFormProps) {
   };
 
   return (
-    <div className="space-y-6 py-4">
+    <div className="space-y-6 py-4 bg-black">
       {/* Emotion display */}
       <div className="text-center space-y-2">
         <div className="text-4xl">{currentEmotion.label}</div>
@@ -133,15 +133,23 @@ export function MoodForm({ onSuccess }: MoodFormProps) {
 
       {/* Submit button */}
       <Button
-        className="w-full"
+         style={{
+                          width: "100%",
+                          alignItems: "center",
+                          padding: "0.5rem 1rem", 
+                          borderRadius: "0.375rem",
+                          fontWeight: "500",
+                          background: "linear-gradient(to right, hsl(var(--primary) / 0.9), hsl(var(--primary)))",
+                          transition: "all 0.2s"
+                        }}
         onClick={handleSubmit}
         disabled={isLoading || loading}
       >
         {isLoading ? (
-          <>
+          <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Saving...
-          </>
+          </span>
         ) : loading ? (
           "Loading..."
         ) : (

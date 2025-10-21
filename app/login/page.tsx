@@ -47,90 +47,288 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/30">
-      <Container className="flex flex-col items-center justify-center w-full">
-        <Card className="w-full md:w-5/12 max-w-2xl p-8 md:p-10 rounded-3xl shadow-2xl border border-primary/10 bg-card/90 backdrop-blur-lg mt-12">
-          <div className="mb-6 text-center">
-            <h1 className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent mb-1 tracking-tight">
+    <div 
+      style={{
+        minHeight: "100vh",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, hsl(var(--background)) 50%, hsl(var(--secondary) / 0.3) 100%)"
+      }}
+    >
+      <Container 
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%"
+        }}
+      >
+        <Card 
+          style={{
+            width: "100%",
+            maxWidth: "28rem",
+            padding: "2.5rem",
+            borderRadius: "1.5rem",
+            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+            border: "1px solid hsl(var(--primary) / 0.1)",
+            backgroundColor: "hsl(var(--card) / 0.9)",
+            backdropFilter: "blur(16px)",
+            marginTop: "3rem"
+          }}
+        >
+          <div style={{ marginBottom: "1.5rem", textAlign: "center" }}>
+            <h1 
+              style={{
+                fontSize: "1.875rem",
+                fontWeight: "800",
+                background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary) / 0.8))",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                marginBottom: "0.25rem",
+                letterSpacing: "-0.025em"
+              }}
+            >
               Sign In
             </h1>
-            <p className="text-base text-muted-foreground font-medium">
+            <p 
+              style={{
+                fontSize: "0.875rem",
+                color: "hsl(var(--muted-foreground))",
+                fontWeight: "500"
+              }}
+            >
               Welcome back! Please sign in to continue your journey.
             </p>
           </div>
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="space-y-3">
+          
+          <form style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }} onSubmit={handleSubmit}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-base font-semibold mb-1"
+                  style={{
+                    display: "block",
+                    fontSize: "0.875rem",
+                    fontWeight: "600",
+                    marginBottom: "0.5rem",
+                    color: "hsl(var(--foreground))"
+                  }}
                 >
                   Email
                 </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <div style={{ position: "relative" }}>
+                  <Mail 
+                    style={{
+                      position: "absolute",
+                      left: "0.75rem",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      width: "1.25rem",
+                      height: "1.25rem",
+                      color: "hsl(var(--muted-foreground))"
+                    }}
+                  />
                   <Input
                     id="email"
                     type="email"
                     placeholder="Enter your email"
-                    className="pl-12 py-2 text-base rounded-xl bg-card bg-opacity-80 border border-primary focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder:text-muted-foreground"
+                    style={{
+                      paddingLeft: "3rem",
+                      paddingTop: "0.625rem",
+                      paddingBottom: "0.625rem",
+                      fontSize: "0.875rem",
+                      borderRadius: "0.75rem",
+                      backgroundColor: "hsl(var(--card) / 0.8)",
+                      border: "1px solid hsl(var(--primary) / 0.3)",
+                      color: "hsl(var(--foreground))",
+                      outline: "none",
+                      transition: "all 0.2s"
+                    }}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    onFocus={(e) => {
+                      e.target.style.borderColor = "hsl(var(--primary))";
+                      e.target.style.boxShadow = "0 0 0 2px hsl(var(--primary) / 0.2)";
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = "hsl(var(--primary) / 0.3)";
+                      e.target.style.boxShadow = "none";
+                    }}
                   />
                 </div>
               </div>
+              
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-base font-semibold mb-1"
+                  style={{
+                    display: "block",
+                    fontSize: "0.875rem",
+                    fontWeight: "600",
+                    marginBottom: "0.5rem",
+                    color: "hsl(var(--foreground))"
+                  }}
                 >
                   Password
                 </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <div style={{ position: "relative" }}>
+                  <Lock 
+                    style={{
+                      position: "absolute",
+                      left: "0.75rem",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      width: "1.25rem",
+                      height: "1.25rem",
+                      color: "hsl(var(--muted-foreground))"
+                    }}
+                  />
                   <Input
                     id="password"
                     type="password"
                     placeholder="Enter your password"
-                    className="pl-12 py-2 text-base rounded-xl bg-card bg-opacity-80 border border-primary focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder:text-muted-foreground"
+                    style={{
+                      paddingLeft: "3rem",
+                      paddingTop: "0.625rem",
+                      paddingBottom: "0.625rem",
+                      fontSize: "0.875rem",
+                      borderRadius: "0.75rem",
+                      backgroundColor: "hsl(var(--card) / 0.8)",
+                      border: "1px solid hsl(var(--primary) / 0.3)",
+                      color: "hsl(var(--foreground))",
+                      outline: "none",
+                      transition: "all 0.2s"
+                    }}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    onFocus={(e) => {
+                      e.target.style.borderColor = "hsl(var(--primary))";
+                      e.target.style.boxShadow = "0 0 0 2px hsl(var(--primary) / 0.2)";
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = "hsl(var(--primary) / 0.3)";
+                      e.target.style.boxShadow = "none";
+                    }}
                   />
                 </div>
               </div>
             </div>
+            
             {error && (
-              <p className="text-red-500 text-base text-center font-medium">
+              <p 
+                style={{
+                  color: "hsl(var(--destructive))",
+                  fontSize: "0.875rem",
+                  textAlign: "center",
+                  fontWeight: "500",
+                  padding: "0.75rem",
+                  backgroundColor: "hsl(var(--destructive) / 0.1)",
+                  borderRadius: "0.5rem",
+                  border: "1px solid hsl(var(--destructive) / 0.2)"
+                }}
+              >
                 {error}
               </p>
             )}
+            
             <Button
-              className="w-full py-2 text-base rounded-xl font-bold bg-gradient-to-r from-primary to-primary/80 shadow-md hover:from-primary/80 hover:to-primary"
+              style={{
+                width: "100%",
+                padding: "0.75rem",
+                fontSize: "0.875rem",
+                borderRadius: "0.75rem",
+                fontWeight: "700",
+                background: "linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary) / 0.8))",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                border: "none",
+                color: "hsl(var(--primary-foreground))",
+                cursor: loading ? "not-allowed" : "pointer",
+                opacity: loading ? 0.7 : 1,
+                transition: "all 0.2s"
+              }}
               size="lg"
               type="submit"
               disabled={loading}
+              onMouseEnter={(e) => {
+                if (!loading) {
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.15)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
+              }}
             >
               {loading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
-          <div className="my-6 border-t border-primary/10" />
-          <div className="flex flex-col items-center gap-2">
-            <div className="flex items-center justify-center gap-2 text-sm">
-              <span className="text-muted-foreground">
-                Don&apos;t have an account?
+          
+          <div 
+            style={{
+              marginTop: "1.5rem",
+              marginBottom: "1.5rem",
+              borderTop: "1px solid hsl(var(--primary) / 0.1)"
+            }}
+          />
+          
+          <div 
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "0.5rem"
+            }}
+          >
+            <div 
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0.5rem",
+                fontSize: "0.875rem"
+              }}
+            >
+              <span style={{ color: "hsl(var(--muted-foreground))" }}>
+                Don't have an account?
               </span>
               <Link
                 href="/signup"
-                className="text-primary font-semibold underline hover:text-primary/80 transition-colors"
+                style={{
+                  color: "hsl(var(--primary))",
+                  fontWeight: "600",
+                  textDecoration: "underline",
+                  transition: "color 0.2s"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "hsl(var(--primary) / 0.8)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "hsl(var(--primary))";
+                }}
               >
                 Sign up
               </Link>
-              <span className="text-muted-foreground">·</span>
+              <span style={{ color: "hsl(var(--muted-foreground))" }}>·</span>
               <Link
                 href="/forgot-password"
-                className="text-primary underline hover:text-primary/80 transition-colors"
+                style={{
+                  color: "hsl(var(--primary))",
+                  textDecoration: "underline",
+                  transition: "color 0.2s"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "hsl(var(--primary) / 0.8)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "hsl(var(--primary))";
+                }}
               >
                 Forgot password?
               </Link>

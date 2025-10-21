@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
   :root {
@@ -134,5 +132,188 @@
 
   .bg-pos-100 {
     background-position: 100% 0%;
+  }
+}
+
+@layer components {
+  .input-base {
+    display: flex;
+    height: 2.25rem; /* 9 * 0.25rem = 36px */
+    width: 100%;
+    border-radius: calc(var(--radius) - 2px);
+    border: 1px solid hsl(var(--input));
+    background-color: transparent;
+    padding: 0.25rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    color: hsl(var(--foreground));
+  }
+
+  .input-base::placeholder {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .input-base:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 1px hsl(var(--ring));
+  }
+
+  .input-base:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .input-base::file-selector-button {
+    border: 0;
+    background-color: transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    margin-right: 0.5rem;
+    cursor: pointer;
+  }
+
+  /* Responsive text size */
+  @media (min-width: 768px) {
+    .input-base {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+  }
+}
+
+@layer components {
+  .button-base {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+
+  .button-base:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 1px hsl(var(--ring));
+  }
+
+  .button-base:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .button-base svg {
+    pointer-events: none;
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* Variants */
+  .button-default {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .button-default:hover:not(:disabled) {
+    background-color: hsl(var(--primary) / 0.9);
+  }
+
+  .button-destructive {
+    background-color: hsl(var(--destructive));
+    color: hsl(var(--destructive-foreground));
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .button-destructive:hover:not(:disabled) {
+    background-color: hsl(var(--destructive) / 0.9);
+  }
+
+  .button-outline {
+    border: 1px solid hsl(var(--input));
+    background-color: hsl(var(--background));
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .button-outline:hover:not(:disabled) {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+  }
+
+  .button-secondary {
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .button-secondary:hover:not(:disabled) {
+    background-color: hsl(var(--secondary) / 0.8);
+  }
+
+  .button-ghost:hover:not(:disabled) {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+  }
+
+  .button-link {
+    color: hsl(var(--primary));
+    text-underline-offset: 4px;
+  }
+
+  .button-link:hover:not(:disabled) {
+    text-decoration: underline;
+  }
+
+  /* Sizes */
+  .button-default-size {
+    height: 2.25rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .button-sm {
+    height: 2rem;
+    border-radius: calc(var(--radius) - 2px);
+    padding: 0 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .button-lg {
+    height: 2.5rem;
+    border-radius: calc(var(--radius) - 2px);
+    padding: 0 2rem;
+  }
+
+  .button-icon {
+    height: 2.25rem;
+    width: 2.25rem;
+  }
+
+  /* Label Styles */
+  .label-base {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1;
+    color: hsl(var(--foreground));
+    transition: color 0.2s;
+  }
+
+  .label-base[data-disabled],
+  .label-base:has(+ :disabled),
+  .label-base:has(+ [disabled]) {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  /* Peer disabled support - when label is before a disabled input */
+  :has(> .label-base) + :disabled ~ .label-base,
+  :has(> .label-base) + [disabled] ~ .label-base {
+    cursor: not-allowed;
+    opacity: 0.7;
   }
 }

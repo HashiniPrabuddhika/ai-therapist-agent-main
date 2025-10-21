@@ -31,7 +31,7 @@ export function ZenGarden() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4  bg-emerald-900 p-4 rounded-lg">
       <div className="flex justify-center gap-4">
         {items.map((item) => (
           <motion.button

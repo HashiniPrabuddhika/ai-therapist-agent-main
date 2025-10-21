@@ -19,7 +19,7 @@ export function Header() {
 
   const navItems = [
     { href: "/features", label: "Features" },
-    { href: "/about", label: "About Aura" },
+    { href: "/about", label: "About Nova" },
   ];
 
   return (
@@ -34,11 +34,11 @@ export function Header() {
             href="/"
             className="flex items-center space-x-2 transition-opacity hover:opacity-80"
           >
-            <AudioWaveform className="h-6 w-6 text-primary animate-pulse-gentle" />
+            {/* <AudioWaveform className="h-6 w-6 text-primary animate-pulse-gentle" /> */}
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-foreground">Aura</span>
+              <span className="text-sm font-medium text-foreground">Nova </span>
               <span className="text-xs text-muted-foreground">
-                Your mental health Companion
+                Calm, peaceful, perfect for mental wellness
               </span>
             </div>
           </Link>
@@ -57,14 +57,14 @@ export function Header() {
           </nav>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-">
+          <div className="flex items-center gap-3">
             <ThemeToggle />
 
             {isAuthenticated ? (
               <>
                 <Button
                   asChild
-                  className="hidden md:inline-flex gap-2 bg-primary/90 hover:bg-primary"
+                  className="hidden md:inline-flex gap-2 bg-primary/90 hover:bg-primary text-primary-foreground"
                 >
                   <Link href="/dashboard">
                     <MessageCircle className="w-4 h-4" />
@@ -77,7 +77,8 @@ export function Header() {
                   size="sm"
                   className="text-muted-foreground hover:text-foreground"
                 >
-                  <LogOut className="w-4 h-4" />
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign out
                 </Button>
               </>
             ) : (
@@ -116,7 +117,7 @@ export function Header() {
             {isAuthenticated && (
               <Button
                 asChild
-                className="w-full gap-2 bg-primary/90 hover:bg-primary"
+                className="w-full gap-2 bg-primary/90 hover:bg-primary text-primary-foreground"
               >
                 <Link href="/dashboard">
                   <MessageCircle className="w-4 h-4" />

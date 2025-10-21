@@ -109,21 +109,35 @@ export function ActivityLogger({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="bg-card border-border sm:max-w-md bg-black">
         <DialogHeader>
-          <DialogTitle>Log Activity</DialogTitle>
-          <DialogDescription>Record your wellness activity</DialogDescription>
+          <DialogTitle className="text-foreground text-xl font-semibold">
+            Log Activity
+          </DialogTitle>
+          <DialogDescription className="text-muted-foreground">
+            Record your wellness activity
+          </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        
+        <form onSubmit={handleSubmit} className="space-y-5 mt-2">
           <div className="space-y-2">
-            <Label>Activity Type</Label>
+            <Label htmlFor="activity-type" className="text-foreground">
+              Activity Type
+            </Label>
             <Select value={type} onValueChange={setType}>
-              <SelectTrigger>
+              <SelectTrigger 
+                id="activity-type"
+                className="bg-background border-border hover:border-primary/50 focus:border-primary transition-colors"
+              >
                 <SelectValue placeholder="Select activity type" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-card/95 backdrop-blur-md border-border shadow-xl">
                 {activityTypes.map((type) => (
-                  <SelectItem key={type.id} value={type.id}>
+                  <SelectItem 
+                    key={type.id} 
+                    value={type.id}
+                    className="hover:bg-primary/20 focus:bg-primary/20 cursor-pointer text-foreground"
+                  >
                     {type.name}
                   </SelectItem>
                 ))}
@@ -132,42 +146,59 @@ export function ActivityLogger({
           </div>
 
           <div className="space-y-2">
-            <Label>Name</Label>
+            <Label htmlFor="activity-name" className="text-foreground">
+              Name
+            </Label>
             <Input
+              id="activity-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Morning Meditation, Evening Walk, etc."
+              className="bg-background border-border hover:border-primary/50 focus:border-primary transition-colors placeholder:text-muted-foreground"
             />
           </div>
 
           <div className="space-y-2">
-            <Label>Duration (minutes)</Label>
+            <Label htmlFor="activity-duration" className="text-foreground">
+              Duration (minutes)
+            </Label>
             <Input
+              id="activity-duration"
               type="number"
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
               placeholder="15"
+              className="bg-background border-border hover:border-primary/50 focus:border-primary transition-colors placeholder:text-muted-foreground"
             />
           </div>
 
           <div className="space-y-2">
-            <Label>Description (optional)</Label>
+            <Label htmlFor="activity-description" className="text-foreground">
+              Description <span className="text-muted-foreground text-xs">(optional)</span>
+            </Label>
             <Input
+              id="activity-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="How did it go?"
+              className="bg-background border-border hover:border-primary/50 focus:border-primary transition-colors placeholder:text-muted-foreground"
             />
           </div>
 
-          <div className="flex justify-end gap-2">
+          <div className="flex justify-end gap-3 pt-2">
             <Button
               type="button"
               variant="ghost"
               onClick={() => onOpenChange(false)}
+              className="hover:bg-accent hover:text-accent-foreground"
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isLoading || loading}>
+            <Button 
+              type="submit" 
+              disabled={isLoading || loading}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm"
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

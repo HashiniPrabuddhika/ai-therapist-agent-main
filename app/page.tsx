@@ -47,7 +47,7 @@ export default function Home() {
 
   const welcomeSteps = [
     {
-      title: "Hi, I'm Aura 👋",
+      title: "Hi, I'm Nova👋",
       description:
         "Your AI companion for emotional well-being. I'm here to provide a safe, judgment-free space for you to express yourself.",
       icon: Waves,
@@ -128,26 +128,49 @@ export default function Home() {
           {/* Enhanced badge with subtle animation */}
           <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm border border-primary/20 bg-primary/5 backdrop-blur-sm hover:border-primary/40 transition-all duration-300">
             <Waves className="w-4 h-4 animate-wave text-primary" />
-            <span className="relative text-foreground/90 dark:text-foreground after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary/30 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
-              Your AI Agent Mental Health Companion
+           <span className="relative text-foreground/90 dark:text-foreground after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary/30 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">
+           
+           Your AI Agent Mental Health Companion
             </span>
           </div>
 
           {/* Enhanced main heading with smoother gradient */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-plus-jakarta tracking-tight">
-            <span className="inline-block bg-gradient-to-r from-primary via-primary/90 to-secondary bg-clip-text text-transparent [text-shadow:_0_1px_0_rgb(0_0_0_/_20%)] hover:to-primary transition-all duration-300">
-              Find Peace
+          <h1 
+  style={{
+    fontSize: "clamp(3.25rem, 5vw, 4.5rem)",
+    fontWeight: "bold",
+    letterSpacing: "-0.025em",
+    lineHeight: "1.1",
+  }}
+>
+  <span
+    style={{
+      display: "inline-block",
+      background: "linear-gradient(to right, #60b56f, rgba(96, 181, 111, 0.9), #a78bfa)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      backgroundClip: "text",
+      transition: "all 0.3s",
+    }}
+  >   Your Wellness
             </span>
             <br />
-            <span className="inline-block mt-2 bg-gradient-to-b from-foreground to-foreground/90 bg-clip-text text-transparent">
-              of Mind
+            <span
+    style={{
+      display: "inline-block",
+      marginTop: "0.8rem",
+      background: "linear-gradient(to bottom, #333d47, rgba(51, 61, 71, 0.9))",
+      WebkitBackgroundClip: "text",
+      backgroundClip: "text",
+    }}
+  >  Your Way
             </span>
           </h1>
 
           {/* Enhanced description with better readability */}
           <p className="max-w-[600px] mx-auto text-base md:text-lg text-muted-foreground leading-relaxed tracking-wide">
-            Experience a new way of emotional support. Our AI companion is here
-            to listen, understand, and guide you through life's journey.
+            Share your thoughts, explore your feelings, <br></br>
+            find your path. Nova is here for all of it.
           </p>
 
           {/* Emotion slider section with enhanced transitions */}
@@ -206,55 +229,66 @@ export default function Home() {
           </motion.div>
 
           {/* Enhanced CTA button and welcome dialog */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: mounted ? 1 : 0, y: mounted ? 0 : 20 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+          <motion.div className="pt-4">
+          <button
+            onClick={() => setShowDialog(true)}
+            className="group relative h-11 px-10 rounded-full overflow-hidden bg-gradient-to-r from-teal-500 via-teal-400 to-blue-500 shadow-xl shadow-teal-500/30 hover:shadow-2xl hover:shadow-teal-500/40 transition-all duration-500 hover:scale-105"
           >
-            <Button
-              size="lg"
-              onClick={() => setShowDialog(true)}
-              className="relative group h-12 px-8 rounded-full bg-gradient-to-r from-primary via-primary/90 to-secondary hover:to-primary shadow-lg shadow-primary/20 transition-all duration-500 hover:shadow-xl hover:shadow-primary/30"
-            >
-              <span className="relative z-10 font-medium flex items-center gap-2">
-                Begin Your Journey
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </span>
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-size-200 bg-pos-0 group-hover:bg-pos-100" />
-            </Button>
-          </motion.div>
+            {/* Animated shine effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+            
+            {/* Button content */}
+            <span className="relative z-10 font-semibold text-white flex items-center gap-3 text-lg">
+              Begin Your Journey
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+            </span>
+
+            <div className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/10 transition-colors duration-300" />
+          </button>
+        </motion.div>
         </motion.div>
 
         {/* Enhanced scroll indicator */}
-        <motion.div
+       <motion.div
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.8 }}
         >
-          <div className="w-6 h-10 rounded-full border-2 border-primary/20 flex items-start justify-center p-1 hover:border-primary/40 transition-colors duration-300">
+          <div 
+            className="w-6 h-10 rounded-full border-2 border-primary/20 flex items-start justify-center p-1 hover:border-primary/40 transition-colors duration-300 cursor-pointer"
+            onClick={() => {
+              document.getElementById('features-section')?.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }}
+          >
             <div className="w-1 h-2 rounded-full bg-primary animate-scroll" />
           </div>
         </motion.div>
       </section>
 
       {/* Enhanced Features Grid */}
-      <section className="relative py-20 px-4 overflow-hidden">
-        {/* <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background" /> */}
-
+       <section id="features-section" className="relative py-20 px-4 overflow-hidden">
         <div className="max-w-6xl mx-auto">
-          <motion.div className="text-center mb-16 space-y-4 text-white ">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-primary/90 to-primary bg-clip-text text-transparent dark:text-primary/90">
-              How Aura Helps You
+          <motion.div
+            className="text-center mb-16 space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-primary dark:text-primary/90">
+              How Nova Helps You
             </h2>
-            <p className="text-foreground dark:text-foreground/95 max-w-2xl mx-auto font-medium text-lg">
+            <p className="text-foreground/80 dark:text-foreground/90 max-w-2xl mx-auto font-medium text-lg">
               Experience a new kind of emotional support, powered by empathetic
               AI
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -263,26 +297,43 @@ export default function Home() {
                 transition={{ delay: feature.delay, duration: 0.5 }}
                 viewport={{ once: true }}
               >
-                <Card className="group relative overflow-hidden border border-primary/10 hover:border-primary/20 transition-all duration-300 h-[200px] bg-card/30 dark:bg-card/80 backdrop-blur-sm">
+                <Card className="group relative overflow-hidden border-2 border-primary/10 hover:border-primary/40 transition-all duration-500 h-[220px] bg-card/50 dark:bg-card/80 backdrop-blur-sm hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer">
+                  {/* Animated gradient background */}
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${feature.color} to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-500 dark:group-hover:opacity-30`}
+                    className={`absolute inset-0 bg-gradient-to-br ${feature.color} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
                   />
-                  <CardHeader className="pb-4">
+                  
+                  {/* Shine effect on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+                  
+                  {/* Corner accent */}
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-[3rem]" />
+                  
+                  <CardHeader className="pb-4 relative z-10">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-xl bg-primary/10 dark:bg-primary/20 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors duration-300">
-                        <feature.icon className="w-5 h-5 text-primary dark:text-primary/90" />
+                      <div className="p-2.5 rounded-xl bg-primary/10 dark:bg-primary/20 group-hover:bg-primary/25 dark:group-hover:bg-primary/35 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm group-hover:shadow-md group-hover:shadow-primary/20">
+                        <feature.icon className="w-5 h-5 text-primary dark:text-primary/90 group-hover:scale-110 transition-transform duration-300" />
                       </div>
-                      <h3 className="font-semibold tracking-tight text-foreground/90 dark:text-foreground">
+                      <h3 className="font-semibold tracking-tight text-foreground/90 dark:text-foreground group-hover:text-foreground transition-colors duration-300">
                         {feature.title}
                       </h3>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground/90 dark:text-muted-foreground leading-relaxed">
+                  <CardContent className="relative z-10">
+                    <p className="text-sm text-muted-foreground/90 dark:text-muted-foreground leading-relaxed group-hover:text-foreground/80 dark:group-hover:text-foreground/90 transition-colors duration-300">
                       {feature.description}
                     </p>
                   </CardContent>
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/20 dark:via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  {/* Bottom accent line with pulse */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-primary/40 dark:via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 animate-pulse" />
+                  </div>
+                  
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent" />
+                  </div>
                 </Card>
               </motion.div>
             ))}
@@ -358,8 +409,6 @@ export default function Home() {
           </div>
         </DialogContent>
       </Dialog>
-
-      {/* Add custom animations to globals.css */}
     </div>
   );
 }
