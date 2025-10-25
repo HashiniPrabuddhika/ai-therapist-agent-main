@@ -6,25 +6,40 @@ const BACKEND_API_URL =
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { sessionId: string } }
+  context: { params: Promise<{ sessionId: string }> }
 ) {
   try {
-    const { sessionId } = params;
-    console.log(`Getting chat history for session ${sessionId}`);
+    const { sessionId } = await context.params;
+    
+    // ✅ GET THE AUTHORIZATION HEADER FROM THE REQUEST
+    const authHeader = req.headers.get("authorization");
+    
+    if (!authHeader) {
+      console.error("❌ No authorization header in request");
+      return NextResponse.json(
+        { error: "No token provided" },
+        { status: 401 }
+      );
+    }
 
+    console.log(`Getting chat history for session ${sessionId}`);
+    console.log(`Authorization header present: ${authHeader.substring(0, 20)}...`);
+
+    // ✅ FORWARD THE AUTHORIZATION HEADER TO BACKEND
     const response = await fetch(
       `${BACKEND_API_URL}/chat/sessions/${sessionId}/history`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: authHeader, // ✅ THIS IS CRITICAL
         },
       }
     );
 
     if (!response.ok) {
       const error = await response.json();
-      console.error("Failed to get chat history:", error);
+      console.error("Backend error:", error);
       return NextResponse.json(
         { error: error.error || "Failed to get chat history" },
         { status: response.status }
@@ -32,13 +47,14 @@ export async function GET(
     }
 
     const data = await response.json();
-    console.log("Chat history retrieved successfully:", data);
+    console.log("Chat history retrieved successfully");
 
-    // Format the response to match the frontend's expected format
+    // Format the response
     const formattedMessages = data.map((msg: any) => ({
       role: msg.role,
       content: msg.content,
       timestamp: msg.timestamp,
+      metadata: msg.metadata,
     }));
 
     return NextResponse.json(formattedMessages);

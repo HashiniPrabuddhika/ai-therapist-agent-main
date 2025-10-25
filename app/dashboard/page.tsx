@@ -346,36 +346,69 @@ export default function Dashboard() {
   }, [activities]);
 
   const fetchDailyStats = useCallback(async () => {
-    try {
-      const sessions = await getAllChatSessions();
-      const activitiesResponse = await fetch("/api/activities/today");
-      if (!activitiesResponse.ok) throw new Error("Failed to fetch activities");
-      const activities = await activitiesResponse.json();
-
-      const moodEntries = activities.filter(
-        (a: Activity) => a.type === "mood" && a.moodScore !== null
-      );
-      const averageMood =
-        moodEntries.length > 0
-          ? Math.round(
-              moodEntries.reduce(
-                (acc: number, curr: Activity) => acc + (curr.moodScore || 0),
-                0
-              ) / moodEntries.length
-            )
-          : null;
-
+  try {
+    // Get token from localStorage
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+      console.warn('No authentication token found');
       setDailyStats({
-        moodScore: averageMood,
+        moodScore: null,
         completionRate: 100,
-        mindfulnessCount: sessions.length,
-        totalActivities: activities.length,
+        mindfulnessCount: 0,
+        totalActivities: 0,
         lastUpdated: new Date(),
       });
-    } catch (error) {
-      console.error("Error fetching daily stats:", error);
+      return;
     }
-  }, []);
+
+    const sessions = await getAllChatSessions();
+    
+    // Pass the token in the Authorization header
+    const activitiesResponse = await fetch("/api/activities/today", {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!activitiesResponse.ok) {
+      throw new Error("Failed to fetch activities");
+    }
+    
+    const activities = await activitiesResponse.json();
+
+    const moodEntries = activities.filter(
+      (a: Activity) => a.type === "mood" && a.moodScore !== null
+    );
+    const averageMood =
+      moodEntries.length > 0
+        ? Math.round(
+            moodEntries.reduce(
+              (acc: number, curr: Activity) => acc + (curr.moodScore || 0),
+              0
+            ) / moodEntries.length
+          )
+        : null;
+
+    setDailyStats({
+      moodScore: averageMood,
+      completionRate: 100,
+      mindfulnessCount: sessions.length,
+      totalActivities: activities.length,
+      lastUpdated: new Date(),
+    });
+  } catch (error) {
+    console.error("Error fetching daily stats:", error);
+    setDailyStats({
+      moodScore: null,
+      completionRate: 100,
+      mindfulnessCount: 0,
+      totalActivities: 0,
+      lastUpdated: new Date(),
+    });
+  }
+}, []);
 
   useEffect(() => {
     fetchDailyStats();

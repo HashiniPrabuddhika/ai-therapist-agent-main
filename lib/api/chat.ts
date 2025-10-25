@@ -40,25 +40,45 @@ export interface ApiResponse {
   };
 }
 
-const API_BASE =
-  process.env.BACKEND_API_URL ||
-  "https://ai-therapist-agent-backend.onrender.com";
+// ✅ CHANGED: Use Next.js API routes instead of direct backend calls
+const API_BASE = "/api";
 
-// Helper function to get auth headers
-const getAuthHeaders = () => {
+// ✅ FIXED: Safe helper function with debug logging
+const getAuthHeaders = (): HeadersInit => {
+  // Check if we're in the browser
+  if (typeof window === "undefined") {
+    console.log("⚠️ Server-side render detected - no token available");
+    return {
+      "Content-Type": "application/json",
+    };
+  }
+
+  // Client-side: safely access localStorage
   const token = localStorage.getItem("token");
+
+  // ✅ DEBUG: Log token status
+  if (!token) {
+    console.error("❌ No token found in localStorage!");
+    console.log("Available localStorage keys:", Object.keys(localStorage));
+  } else {
+    console.log("✅ Token found:", token.substring(0, 20) + "...");
+  }
+
   return {
     "Content-Type": "application/json",
-    Authorization: token ? `Bearer ${token}` : "",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 };
 
 export const createChatSession = async (): Promise<string> => {
   try {
-    console.log("Creating new chat session...");
+    console.log("Creating new chat session at:", `${API_BASE}/chat/sessions`);
+    const headers = getAuthHeaders();
+    console.log("Request headers:", headers);
+
     const response = await fetch(`${API_BASE}/chat/sessions`, {
       method: "POST",
-      headers: getAuthHeaders(),
+      headers,
     });
 
     if (!response.ok) {
@@ -81,7 +101,7 @@ export const sendChatMessage = async (
   message: string
 ): Promise<ApiResponse> => {
   try {
-    console.log(`Sending message to session ${sessionId}:`, message);
+    console.log(`Sending message to: ${API_BASE}/chat/sessions/${sessionId}/messages`);
     const response = await fetch(
       `${API_BASE}/chat/sessions/${sessionId}/messages`,
       {
@@ -110,7 +130,7 @@ export const getChatHistory = async (
   sessionId: string
 ): Promise<ChatMessage[]> => {
   try {
-    console.log(`Fetching chat history for session ${sessionId}`);
+    console.log(`Fetching chat history from: ${API_BASE}/chat/sessions/${sessionId}/history`);
     const response = await fetch(
       `${API_BASE}/chat/sessions/${sessionId}/history`,
       {
@@ -132,7 +152,6 @@ export const getChatHistory = async (
       throw new Error("Invalid chat history format");
     }
 
-    // Ensure each message has the correct format
     return data.map((msg: any) => ({
       role: msg.role,
       content: msg.content,
@@ -147,10 +166,22 @@ export const getChatHistory = async (
 
 export const getAllChatSessions = async (): Promise<ChatSession[]> => {
   try {
-    console.log("Fetching all chat sessions...");
+    console.log("Fetching all chat sessions from:", `${API_BASE}/chat/sessions`);
+
+    // ✅ DEBUG: Check token before making request
+    const headers = getAuthHeaders();
+    console.log("Request headers for getAllChatSessions:", headers);
+
     const response = await fetch(`${API_BASE}/chat/sessions`, {
-      headers: getAuthHeaders(),
+      headers,
     });
+
+    // ✅ Better error handling for 401
+    if (response.status === 401) {
+      console.error("❌ 401 Unauthorized - Token is invalid or missing");
+      console.log("Current localStorage token:", localStorage.getItem("token"));
+      throw new Error("Unauthorized. Please log in again.");
+    }
 
     if (!response.ok) {
       const error = await response.json();
@@ -162,7 +193,6 @@ export const getAllChatSessions = async (): Promise<ChatSession[]> => {
     console.log("Received chat sessions:", data);
 
     return data.map((session: any) => {
-      // Ensure dates are valid
       const createdAt = new Date(session.createdAt || Date.now());
       const updatedAt = new Date(session.updatedAt || Date.now());
 

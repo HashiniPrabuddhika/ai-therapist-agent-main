@@ -6,10 +6,21 @@ const BACKEND_API_URL =
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { sessionId: string } }
+  context: { params: Promise<{ sessionId: string }> }
 ) {
   try {
-    const { sessionId } = params;
+    const { sessionId } = await context.params;
+    
+    // ✅ GET THE AUTHORIZATION HEADER
+    const authHeader = req.headers.get("authorization");
+    
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: "No token provided" },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
     const { message } = body;
 
@@ -20,13 +31,16 @@ export async function POST(
       );
     }
 
-    console.log(`Sending message to session ${sessionId}:`, message);
+    console.log(`Sending message to session ${sessionId}`);
+
+    // ✅ FORWARD THE AUTHORIZATION HEADER
     const response = await fetch(
       `${BACKEND_API_URL}/chat/sessions/${sessionId}/messages`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: authHeader, // ✅ CRITICAL
         },
         body: JSON.stringify({ message }),
       }
@@ -34,7 +48,7 @@ export async function POST(
 
     if (!response.ok) {
       const error = await response.json();
-      console.error("Failed to send message:", error);
+      console.error("Backend error:", error);
       return NextResponse.json(
         { error: error.error || "Failed to send message" },
         { status: response.status }
@@ -42,7 +56,6 @@ export async function POST(
     }
 
     const data = await response.json();
-    console.log("Message sent successfully:", data);
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error sending message:", error);
